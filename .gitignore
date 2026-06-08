@@ -1,0 +1,24 @@
+# Cloudflare Wrangler local state & cache (may contain account IDs)
+.wrangler/
+
+# Claude Code local settings (may contain local paths / machine info)
+.claude/
+
+# Local dev secrets — never commit
+.dev.vars
+.env
+*.local
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Logs
+*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
