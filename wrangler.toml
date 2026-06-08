@@ -1,0 +1,43 @@
+name = "filedrop"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+# Use the free <name>.<your-subdomain>.workers.dev URL by default.
+# Set this to false only if you serve FileDrop exclusively from a
+# custom domain (see the routes block below).
+workers_dev = true
+
+# ── Custom domain (OPTIONAL) ─────────────────────────────────
+# Only needed if you want FileDrop on your own domain instead of
+# the free workers.dev URL. To use one:
+#   1. Add the domain to Cloudflare DNS first.
+#   2. Uncomment the block below and replace the pattern with your
+#      subdomain.
+#   3. Optionally set workers_dev = false above to disable the
+#      workers.dev URL.
+# routes = [
+#   { pattern = "filedrop.example.com", custom_domain = true }
+# ]
+
+# ── Cron trigger — cleanup runs every hour ──────────────────
+[triggers]
+crons = ["0 * * * *"]
+
+# ── R2 bucket binding ────────────────────────────────────────
+# Created by: wrangler r2 bucket create filedrop-files
+[[r2_buckets]]
+binding = "FILEDROP_R2"
+bucket_name = "filedrop-files"
+
+# ── KV namespace binding ─────────────────────────────────────
+# Created by: wrangler kv namespace create FILEDROP_KV
+# Paste the returned id below (replaces the placeholder).
+[[kv_namespaces]]
+binding = "FILEDROP_KV"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# ── Optional environment variables ──────────────────────────
+# Defaults live in worker.js (CONFIG block). Override there or wire
+# up vars/secrets here if you prefer.
+# [vars]
+# MAX_FILE_SIZE_MB = "500"
